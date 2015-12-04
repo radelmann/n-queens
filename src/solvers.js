@@ -124,10 +124,12 @@ window.findNQueensSolution = function(n) {
   });
 
   if (results.length === 0) {
-    var board = new Board({'n':n});
+    var board = new Board({
+      'n': n
+    });
     myBoard.rows().forEach(function(row) {
-        results.push(row.slice());
-      });
+      results.push(row.slice());
+    });
   }
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(results));
 
