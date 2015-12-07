@@ -78,11 +78,11 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
-    hasRowConflictAt: function(rowIndex) {
-      var row = this.rows()[rowIndex];
+    hasRowConflictAt: function(row) {
+      var n = this.get('n');
       var count = 0;
-      for (var i = 0; i < row.length; i++) {
-        if (row[i] === 1) count++;
+      for (var col = 0; col < n; col++) {
+        if (this.get(row)[col] === 1) count++;
         if (count > 1) return true;
       };
       return false;
@@ -98,17 +98,15 @@
       return false;
     },
 
-
-
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
-    hasColConflictAt: function(colIndex) {
-      var rows = this.rows();
+    hasColConflictAt: function(col) {
+      var n = this.get('n');
       var count = 0;
-      for (var i = 0; i < rows.length; i++) {
-        if (rows[i][colIndex] === 1) count++;
+      for (var row = 0; row < n; row++) {
+        if (this.get(row)[col] === 1) count++;
         if (count > 1) return true;
       }
       return false;
@@ -136,8 +134,6 @@
 
       var colIndex = majorDiagonalColumnIndexAtFirstRow;
 
-      var rows = this.rows();
-
       var count = 0;
 
       var colI = colIndex,
@@ -145,7 +141,7 @@
 
       //traverse from colIndex to n diagonally
       for (; colI < n && rowI < n; colI++, rowI++) {
-        if (rows[rowI][colI] === 1) count++;
+        if (this.get(rowI)[colI] === 1) count++;
         if (count > 1) return true;
       }
 
@@ -156,7 +152,7 @@
 
         if (colIndex !== 0) {
           for (; colI < n && rowI < n; colI++, rowI++) {
-            if (rows[colI][rowI] === 1) count++;
+            if (this.get(colI)[rowI] === 1) count++;
             if (count > 1) return true;
           }
         }
@@ -186,8 +182,6 @@
 
       var colIndex = minorDiagonalColumnIndexAtFirstRow;
 
-      var rows = this.rows();
-
       var count = 0;
 
       var colI = colIndex,
@@ -195,17 +189,17 @@
 
       //traverse from n to colIndex diagonally
       for (; colI >= 0 && rowI < n; colI--, rowI++) {
-        if (rows[rowI][colI] === 1) count++;
+        if (this.get(rowI)[colI] === 1) count++;
         if (count > 1) return true;      }
 
-      if (colIndex !== 3) {
+      if (colIndex !== n - 1) {
         count = 0;
 
         colI = n - 1,
           rowI = colIndex;
 
         for (; colI >= 0 && rowI < n; colI--, rowI++) {
-          if (rows[rowI][colI] === 1) count++;
+          if (this.get(rowI)[colI] === 1) count++;
           if (count > 1) return true;
         }
 
